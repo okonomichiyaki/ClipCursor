@@ -15,9 +15,10 @@
     /// </summary>
     public class ClipCursor_Main
     {    
+        private const int FenceBorder = 20;
         private const int WindowTitleMaxLength = 50; // Length window titles get truncated to
         private const int ValidateHandleThreshold = 10; // How often the user selected window handle gets validate
-        private const int ClippingRefreshInterval = 100; // How often the clipped area is refreshed in milliseconds
+        private const int ClippingRefreshInterval = 10; // How often the clipped area is refreshed in milliseconds
 
         private static bool verboseOutput = false;
 
@@ -119,10 +120,10 @@
                             string.Format("Get window rectangle win32 error. selectedWindowHandle {0:d}", windowHandle));
                     }
 
-                    windowArea.Left += windowBorderSize.Left;
-                    windowArea.Top += windowBorderSize.Top;
-                    windowArea.Bottom -= windowBorderSize.Bottom;
-                    windowArea.Right -= windowBorderSize.Right;
+                    windowArea.Left += windowBorderSize.Left + FenceBorder;
+                    windowArea.Top += windowBorderSize.Top + FenceBorder;
+                    windowArea.Bottom -= windowBorderSize.Bottom + FenceBorder;
+                    windowArea.Right -= windowBorderSize.Right + FenceBorder;
 
                     if (ClipCursor(ref windowArea) == 0)
                     {
@@ -132,7 +133,7 @@
                     }
 
                     selectedWindowHadFocus = true;
-                    Thread.Sleep(500);
+                  //  Thread.Sleep(500);
                 }
                 else if (selectedWindowHadFocus)
                 {
